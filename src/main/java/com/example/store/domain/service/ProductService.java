@@ -22,7 +22,7 @@ public class ProductService {
 
     public ProductResponse findById(Long id) {
         return productRepository.findById(id).map(productMapper::mapProduct)
-                .orElseThrow(() -> new ProductNotFoundException());
+                .orElseThrow(() -> new ProductNotFoundException("Product not found for id " + id));
     }
 
     public Page<ProductResponse> findAll(PageRequest pageRequest) {

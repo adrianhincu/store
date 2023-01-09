@@ -21,8 +21,7 @@ public class RestErrorHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException e) {
-        log.warn(e.getMessage());
-
+        log.warn(e.getMessage(), e);
         return ResponseEntity
                 .status(StoreApiError.PRODUCT_NOT_FOUND.getHttpStatus())
                 .body(ErrorResponse.getStoreApiError(StoreApiError.PRODUCT_NOT_FOUND));
