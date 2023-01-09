@@ -21,7 +21,8 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public ProductResponse findById(Long id) {
-        return productRepository.findById(id).map(productMapper::mapProduct).orElseThrow(ProductNotFoundException::new);
+        return productRepository.findById(id).map(productMapper::mapProduct)
+                .orElseThrow(() -> new ProductNotFoundException());
     }
 
     public Page<ProductResponse> findAll(PageRequest pageRequest) {
