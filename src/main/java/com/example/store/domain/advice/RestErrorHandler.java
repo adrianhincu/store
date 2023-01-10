@@ -26,6 +26,13 @@ public class RestErrorHandler {
                 .status(StoreApiError.PRODUCT_NOT_FOUND.getHttpStatus())
                 .body(ErrorResponse.getStoreApiError(StoreApiError.PRODUCT_NOT_FOUND));
     }
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<ErrorResponse> handleDefaultException(RuntimeException e) {
+        log.warn(e.getMessage(), e);
+        return ResponseEntity
+                .status(StoreApiError.DEFAULT.getHttpStatus())
+                .body(ErrorResponse.getStoreApiError(StoreApiError.DEFAULT));
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
