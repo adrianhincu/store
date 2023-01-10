@@ -6,6 +6,7 @@ import com.example.store.domain.exceptions.StoreApiError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -36,14 +37,13 @@ public class StoreApiExceptionHandler {
                 .body(ErrorResponse.getStoreApiError(StoreApiError.CATEGORY_NOT_FOUND));
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public final ResponseEntity<ErrorResponse> handleDefaultException(RuntimeException e) {
+    @ExceptionHandler(AccessDeniedException.class)
+    public final ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
         log.warn(e.getMessage(), e);
         return ResponseEntity
-                .status(StoreApiError.DEFAULT.getHttpStatus())
-                .body(ErrorResponse.getStoreApiError(StoreApiError.DEFAULT));
+                .status(StoreApiError.INVALID_GRANTED_AUTHORITIES.getHttpStatus())
+                .body(ErrorResponse.getStoreApiError(StoreApiError.INVALID_GRANTED_AUTHORITIES));
     }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -59,5 +59,13 @@ public class StoreApiExceptionHandler {
                 .status(StoreApiError.INVALID_ARGUMENTS.getHttpStatus())
                 .body(ErrorResponse.getStoreApiError(StoreApiError.INVALID_ARGUMENTS,errors));
 
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<ErrorResponse> handleDefaultException(RuntimeException e) {
+        log.warn(e.getMessage(), e);
+        return ResponseEntity
+                .status(StoreApiError.DEFAULT.getHttpStatus())
+                .body(ErrorResponse.getStoreApiError(StoreApiError.DEFAULT));
     }
 }
