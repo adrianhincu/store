@@ -47,13 +47,16 @@ public class RestErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return errors;
+        return ResponseEntity
+                .status(StoreApiError.INVALID_ARGUMENTS.getHttpStatus())
+                .body(ErrorResponse.getStoreApiError(StoreApiError.INVALID_ARGUMENTS,errors));
+
     }
 }
