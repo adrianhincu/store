@@ -24,9 +24,6 @@ public class Category {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "PRICE", nullable = false)
-    private BigDecimal price;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_CATEGORY_ID")
     @ToString.Exclude
