@@ -10,7 +10,7 @@ public class ErrorResponse {
     private String errorCode;
     private String errorMessage;
 
-    public static  ErrorResponse getStoreApiError(StoreApiError storeApiError){
+    public static ErrorResponse getStoreApiError(StoreApiError storeApiError) {
         return ErrorResponse.builder()
                 .errorMessage(storeApiError.getErrorMessage())
                 .errorCode(storeApiError.name())

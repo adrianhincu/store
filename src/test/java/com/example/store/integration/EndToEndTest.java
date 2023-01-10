@@ -1,6 +1,5 @@
 package com.example.store.integration;
 
-import com.example.store.application.payload.ProductResponse;
 import com.example.store.utils.TestUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

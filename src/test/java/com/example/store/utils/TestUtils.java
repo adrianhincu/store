@@ -46,6 +46,7 @@ public class TestUtils {
                 .price(BigDecimal.valueOf(100L))
                 .build();
     }
+
     public static ProductRequest getMonitorProductRequest() {
         return ProductRequest.builder()
                 .name("Monitor")
