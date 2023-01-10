@@ -18,7 +18,7 @@ import java.util.Map;
 
 @ControllerAdvice
 @Slf4j
-public class RestErrorHandler {
+public class StoreApiExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException e) {
