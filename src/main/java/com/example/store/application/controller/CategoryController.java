@@ -5,12 +5,11 @@ import com.example.store.application.payload.CategoryResponse;
 import com.example.store.domain.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,15 +24,10 @@ public class CategoryController {
         return categoryService.saveCategory(categoryRequest);
     }
 
-//    @GetMapping(path = "/product/{id}", produces = "application/json")
-//    public ProductResponse getProductById(@PathVariable Long id) {
-//        return productService.findById(id);
-//    }
-//
-//    @GetMapping(path = "/allProducts", produces = "application/json")
-//    public Page<ProductResponse> getAllProducts(@RequestParam("page") int page,
-//                                                @RequestParam("size") int size) {
-//        return productService.findAll(PageRequest.of(page, size));
-//    }
+    @GetMapping(path = "/allCategories", produces = "application/json")
+    public Page<CategoryResponse> getAllProducts(@RequestParam("page") int page,
+                                                 @RequestParam("size") int size) {
+        return categoryService.findAll(PageRequest.of(page, size));
+    }
 
 }

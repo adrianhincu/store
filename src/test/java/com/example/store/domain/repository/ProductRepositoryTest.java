@@ -16,8 +16,7 @@ class ProductRepositoryTest {
     private ProductRepository productRepository;
 
     @Test
-    public void testFindValidTransactionReportByCnp() {
-
+    public void testSaveAndFindValidProduct() {
 
         productRepository.save(TestUtils.getProduct());
         Optional<Product> product = productRepository.findById(1L);

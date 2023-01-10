@@ -2,9 +2,12 @@ package com.example.store.domain.service;
 
 import com.example.store.application.payload.ProductRequest;
 import com.example.store.application.payload.ProductResponse;
+import com.example.store.domain.exceptions.CategoryNotFoundException;
 import com.example.store.domain.exceptions.ProductNotFoundException;
 import com.example.store.domain.mapper.ProductMapper;
+import com.example.store.domain.model.Category;
 import com.example.store.domain.model.Product;
+import com.example.store.domain.repository.CategoryRepository;
 import com.example.store.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
 
     @Transactional(readOnly = true)
@@ -33,7 +37,10 @@ public class ProductService {
 
     @Transactional
     public ProductResponse saveProduct(ProductRequest productRequest) {
-        Product product = productRepository.save(productMapper.mapProductRequest(productRequest));
-        return productMapper.mapProduct(product);
+        Category category = categoryRepository.findById(productRequest.categoryId())
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found for id " + productRequest.categoryId()));
+        Product product = productMapper.mapProductRequest(productRequest);
+        category.addProduct(product);
+        return productMapper.mapProduct(productRepository.save(product));
     }
 }

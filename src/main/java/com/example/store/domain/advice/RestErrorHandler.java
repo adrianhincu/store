@@ -1,5 +1,6 @@
 package com.example.store.domain.advice;
 
+import com.example.store.domain.exceptions.CategoryNotFoundException;
 import com.example.store.domain.exceptions.ProductNotFoundException;
 import com.example.store.domain.exceptions.StoreApiError;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,15 @@ public class RestErrorHandler {
                 .status(StoreApiError.PRODUCT_NOT_FOUND.getHttpStatus())
                 .body(ErrorResponse.getStoreApiError(StoreApiError.PRODUCT_NOT_FOUND));
     }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public final ResponseEntity<ErrorResponse> handleCategoryNotFoundException(CategoryNotFoundException e) {
+        log.warn(e.getMessage(), e);
+        return ResponseEntity
+                .status(StoreApiError.CATEGORY_NOT_FOUND.getHttpStatus())
+                .body(ErrorResponse.getStoreApiError(StoreApiError.CATEGORY_NOT_FOUND));
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public final ResponseEntity<ErrorResponse> handleDefaultException(RuntimeException e) {
         log.warn(e.getMessage(), e);

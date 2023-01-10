@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -33,7 +35,11 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponse saveCategory(CategoryRequest categoryRequest) {
-        Category category = categoryRepository.save(categoryMapper.mapCategoryRequest(categoryRequest));
-        return categoryMapper.mapCategory(category);
+        Category category = categoryMapper.mapCategoryRequest(categoryRequest);
+        Optional.ofNullable(categoryRequest.subCategories()).ifPresent(subCategories ->
+                subCategories.forEach(subCategory ->
+                        category.addSubCategory(categoryMapper.mapCategoryRequest(subCategory))
+                ));
+        return categoryMapper.mapCategory(categoryRepository.save(category));
     }
 }

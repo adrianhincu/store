@@ -10,9 +10,9 @@ public record CategoryResponse(
         Long id,
         String name,
 
-        CategoryResponse parent,
+        Set<CategoryResponse> children,
 
-        Set<CategoryResponse> children
+        Set<ProductResponse> products
 
 ) {
 }

@@ -14,6 +14,9 @@ public record ProductRequest(
         String name,
         @NotNull
         @Min(value = 1)
-        BigDecimal price
+        BigDecimal price,
+
+        @NotNull
+        Long categoryId
 ) {
 }

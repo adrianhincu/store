@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 public enum StoreApiError {
 
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product Not Found"),
-    DEFAULT(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category Not Found"),
+    DEFAULT(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error Contact Administrator");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;

@@ -1,10 +1,12 @@
 package com.example.store.utils;
 
+import com.example.store.application.payload.CategoryRequest;
 import com.example.store.application.payload.ProductRequest;
 import com.example.store.application.payload.ProductResponse;
 import com.example.store.domain.model.Product;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 public class TestUtils {
     public static String getProductNotFoundResponse() {
@@ -44,13 +46,31 @@ public class TestUtils {
         return ProductRequest.builder()
                 .name("Laptop")
                 .price(BigDecimal.valueOf(100L))
+                .categoryId(1L)
                 .build();
     }
 
     public static ProductRequest getMonitorProductRequest() {
         return ProductRequest.builder()
-                .name("Monitor")
+                .name("Telefon")
                 .price(BigDecimal.valueOf(50L))
+                .build();
+    }
+
+    public static CategoryRequest getCategoryRequest() {
+        return CategoryRequest.builder()
+                .name("Laptop, Tablete & Telefoane")
+                .subCategories(Set.of(
+                        CategoryRequest.builder()
+                                .name("Laptopuri")
+                                .build(),
+                        CategoryRequest.builder()
+                                .name("Tablete")
+                                .build(),
+                        CategoryRequest.builder()
+                                .name("Telefoane")
+                                .build()
+                ))
                 .build();
     }
 

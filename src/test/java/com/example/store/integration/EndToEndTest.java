@@ -20,22 +20,30 @@ public class EndToEndTest {
 
     @Test
     @Transactional
-    void createProductAndThenFindId() {
-        var createProductResponse = RestAssured.given().accept(ContentType.JSON).contentType(ContentType.JSON).and()
+    void createCategoryAndProduct() {
+        var createdCategory = RestAssured.given().accept(ContentType.JSON).contentType(ContentType.JSON).and()
+                .body(TestUtils.getCategoryRequest())
+                .when()
+                .post("http://localhost:" + port + "/store/api/category")
+                .then()
+                .extract();
+        Assertions.assertEquals(HttpStatus.CREATED.value(), createdCategory.response().statusCode());
+
+        var createdProduct = RestAssured.given().accept(ContentType.JSON).contentType(ContentType.JSON).and()
                 .body(TestUtils.getLaptopProductRequest())
                 .when()
                 .post("http://localhost:" + port + "/store/api/product")
                 .then()
                 .extract();
-        Assertions.assertEquals(HttpStatus.CREATED.value(), createProductResponse.response().statusCode());
+        Assertions.assertEquals(HttpStatus.CREATED.value(), createdProduct.response().statusCode());
 
-        var findProduct = RestAssured.given().accept(ContentType.JSON).and()
+        var foundProduct = RestAssured.given().accept(ContentType.JSON).and()
                 .when()
                 .get("http://localhost:" + port + "/store/api/product/1")
                 .then()
                 .extract();
 
-        Assertions.assertEquals(HttpStatus.OK.value(), findProduct.response().statusCode());
+        Assertions.assertEquals(HttpStatus.OK.value(), foundProduct.response().statusCode());
     }
 
 }

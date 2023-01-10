@@ -20,7 +20,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ID", nullable = false)
     private Long id;
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,12 +41,12 @@ public class Category {
     @Version
     private Long version;
 
-    public void addProducts(Product product) {
+    public void addProduct(Product product) {
         products.add(product);
         product.setCategory(this);
     }
 
-    public void removeProducts(Product product) {
+    public void removeProduct(Product product) {
         products.remove(product);
         product.setCategory(null);
     }
