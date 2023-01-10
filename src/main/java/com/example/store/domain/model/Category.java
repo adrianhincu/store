@@ -51,12 +51,12 @@ public class Category {
         product.setCategory(null);
     }
 
-    public void addCategory(Category child) {
+    public void addSubCategory(Category child) {
         children.add(child);
         child.setParent(this);
     }
 
-    public void removeCategory(Category child) {
+    public void removeSubCategory(Category child) {
         children.remove(child);
         child.setParent(null);
     }

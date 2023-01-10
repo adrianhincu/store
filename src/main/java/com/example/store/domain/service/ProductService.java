@@ -20,11 +20,13 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
+    @Transactional(readOnly = true)
     public ProductResponse findById(Long id) {
         return productRepository.findById(id).map(productMapper::mapProduct)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found for id " + id));
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductResponse> findAll(PageRequest pageRequest) {
         return productRepository.findAll(pageRequest).map(productMapper::mapProduct);
     }
