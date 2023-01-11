@@ -1,5 +1,6 @@
 package com.example.store.domain.service;
 
+import com.example.store.application.payload.ModifyProductRequest;
 import com.example.store.application.payload.ProductRequest;
 import com.example.store.application.payload.ProductResponse;
 import com.example.store.domain.exceptions.CategoryNotFoundException;
@@ -36,11 +37,28 @@ public class ProductService {
     }
 
     @Transactional
+    public ProductResponse modifyProduct(ModifyProductRequest modifyProductRequest) {
+        Long productId = modifyProductRequest.productId();
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found for id " + productId));
+        product.setPrice(modifyProductRequest.newPrice());
+        return productMapper.mapProduct(product);
+    }
+
+    @Transactional
     public ProductResponse saveProduct(ProductRequest productRequest) {
         Category category = categoryRepository.findById(productRequest.categoryId())
-                .orElseThrow(() -> new CategoryNotFoundException("Category not found for id " + productRequest.categoryId()));
+                .orElseThrow(() ->
+                        new CategoryNotFoundException("Category not found for id " + productRequest.categoryId()));
         Product product = productMapper.mapProductRequest(productRequest);
         category.addProduct(product);
         return productMapper.mapProduct(productRepository.save(product));
+    }
+
+    @Transactional
+    public void removeProduct(Long id) {
+        productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found for id " + id));
+        productRepository.deleteById(id);
     }
 }

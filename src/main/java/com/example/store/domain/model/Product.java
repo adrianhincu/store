@@ -3,8 +3,13 @@ package com.example.store.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @ToString
@@ -25,6 +30,13 @@ public class Product {
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
+    @Column(name = "CREATED_DATE", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+
+    @Column(name = "LAST_MODIFIED_DATE")
+    @UpdateTimestamp
+    private LocalDateTime lastUpdatedDate;
     @Version
     private Long version;
 

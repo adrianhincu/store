@@ -3,7 +3,10 @@ package com.example.store.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -37,6 +40,17 @@ public class Category {
     @ToString.Exclude
     @Builder.Default
     private Set<Product> products = new HashSet<>();
+
+    @Column(name = "CREATED_DATE", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+
+    @Column(name = "LAST_MODIFIED_DATE")
+    @UpdateTimestamp
+    private LocalDateTime lastUpdatedDate;
+
+    @Column(name = "LAST_MODIFIED_BY")
+    private String username;
 
     @Version
     private Long version;

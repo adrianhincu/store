@@ -2,6 +2,7 @@ package com.example.store.application.payload;
 
 import lombok.Builder;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Builder
@@ -12,7 +13,11 @@ public record CategoryResponse(
 
         Set<CategoryResponse> children,
 
-        Set<ProductResponse> products
+        Set<ProductResponse> products,
+
+        LocalDateTime createdDate,
+
+        LocalDateTime lastUpdatedDate
 
 ) {
 }

@@ -56,8 +56,8 @@ public class StoreApiExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return ResponseEntity
-                .status(StoreApiError.INVALID_ARGUMENTS.getHttpStatus())
-                .body(ErrorResponse.getStoreApiError(StoreApiError.INVALID_ARGUMENTS,errors));
+                .status(StoreApiError.UNPROCESSABLE_ENTITY.getHttpStatus())
+                .body(ErrorResponse.getStoreApiError(StoreApiError.UNPROCESSABLE_ENTITY,errors));
 
     }
 
