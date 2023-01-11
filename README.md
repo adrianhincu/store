@@ -1,11 +1,8 @@
 # STORE MANAGEMENT API
 
-___
-
 ## Project Description
 
 The purpose of this demo project is to illustrate the basic CRUD operations and basic authentication
-___
 
 ## Technologies used
 
@@ -14,8 +11,6 @@ ___
 - Maven
 - H2 Database
 - OpenApi
-
-___
 
 ## Build project
 
@@ -31,8 +26,6 @@ Building, packaging and compiling is done by using Maven tool.
    mvn clean install -DskipTests
    ```
 
-___
-
 ## Testing the application
 
 You can run the tests for this project by going to the root of the project and execute
@@ -40,8 +33,6 @@ You can run the tests for this project by going to the root of the project and e
  ```
    mvn test
    ```
-
-___
 
 ### Start the application
 
@@ -53,7 +44,6 @@ or after you build the project go to generated target folder and run
    ```
 
 The Application will start on port `8080`
-___
 
 ## Security
 
@@ -63,7 +53,6 @@ Basic authentication is required in order to access the API.
     - Users with `ADMIN` role have the authority to create/delete categories or products , change the price of a
       product and select products and categories
     - Users with `USER` role can select a products or a list of products
-___
 
 ## Functionalities
 
@@ -89,8 +78,6 @@ In summary the application can:
 
 - Delete a category ( all subcategories will be deleted along with the products)
 - Delete a product by id
-
-___
 
 ## Documentation
 
