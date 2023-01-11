@@ -21,7 +21,7 @@ public class ErrorResponse {
 
     public static ErrorResponse getStoreApiError(StoreApiError storeApiError, Map<String, String> errors) {
         return ErrorResponse.builder()
-                .errorMessage(String.format(storeApiError.getErrorMessage(),errors))
+                .errorMessage(String.format(storeApiError.getErrorMessage(), errors))
                 .errorCode(storeApiError.name())
                 .build();
     }

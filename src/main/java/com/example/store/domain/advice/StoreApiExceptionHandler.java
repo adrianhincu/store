@@ -44,6 +44,7 @@ public class StoreApiExceptionHandler {
                 .status(StoreApiError.INVALID_GRANTED_AUTHORITIES.getHttpStatus())
                 .body(ErrorResponse.getStoreApiError(StoreApiError.INVALID_GRANTED_AUTHORITIES));
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -57,7 +58,7 @@ public class StoreApiExceptionHandler {
         });
         return ResponseEntity
                 .status(StoreApiError.UNPROCESSABLE_ENTITY.getHttpStatus())
-                .body(ErrorResponse.getStoreApiError(StoreApiError.UNPROCESSABLE_ENTITY,errors));
+                .body(ErrorResponse.getStoreApiError(StoreApiError.UNPROCESSABLE_ENTITY, errors));
 
     }
 
