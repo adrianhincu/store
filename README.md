@@ -51,8 +51,8 @@ Basic authentication is required in order to access the API.
 
 - There are 2 roles configured in the application `USER` and `ADMIN`
     - Users with `ADMIN` role have the authority to create/delete categories or products , change the price of a
-      product and select products and categories
-    - Users with `USER` role can select a products or a list of products
+      product and select products or categories
+    - Users with `USER` role can select a product or a list of products
 
 ## Functionalities
 
@@ -76,7 +76,7 @@ In summary the application can:
 
 ### DELETE
 
-- Delete a category ( all subcategories will be deleted along with the products)
+- Delete a category (all subcategories will be deleted along with the products)
 - Delete a product by id
 
 ## Documentation
