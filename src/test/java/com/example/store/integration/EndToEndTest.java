@@ -20,8 +20,10 @@ public class EndToEndTest {
 
     @Test
     @Transactional
-    void createCategoryAndProduct() {
-        var createdCategory = RestAssured.given().accept(ContentType.JSON).contentType(ContentType.JSON).and()
+    void testCreateCategoryAndProduct() {
+        var createdCategory = RestAssured.given().auth()
+                .basic("admin", "admin")
+                .accept(ContentType.JSON).contentType(ContentType.JSON).and()
                 .body(TestUtils.getCategoryRequest())
                 .when()
                 .post("http://localhost:" + port + "/store/api/category")
@@ -29,7 +31,9 @@ public class EndToEndTest {
                 .extract();
         Assertions.assertEquals(HttpStatus.CREATED.value(), createdCategory.response().statusCode());
 
-        var createdProduct = RestAssured.given().accept(ContentType.JSON).contentType(ContentType.JSON).and()
+        var createdProduct = RestAssured.given().auth()
+                .basic("admin", "admin")
+                .accept(ContentType.JSON).contentType(ContentType.JSON).and()
                 .body(TestUtils.getLaptopProductRequest())
                 .when()
                 .post("http://localhost:" + port + "/store/api/product")
@@ -37,13 +41,43 @@ public class EndToEndTest {
                 .extract();
         Assertions.assertEquals(HttpStatus.CREATED.value(), createdProduct.response().statusCode());
 
-        var foundProduct = RestAssured.given().accept(ContentType.JSON).and()
+        var foundProduct = RestAssured.given().auth()
+                .basic("admin", "admin").accept(ContentType.JSON).and()
                 .when()
                 .get("http://localhost:" + port + "/store/api/product/1")
                 .then()
                 .extract();
 
         Assertions.assertEquals(HttpStatus.OK.value(), foundProduct.response().statusCode());
+    }
+
+    @Test
+    @Transactional
+    void testInvalidGrantedAuthorities() {
+        var createdCategory = RestAssured.given().auth()
+                .basic("user", "user")
+                .accept(ContentType.JSON).contentType(ContentType.JSON).and()
+                .body(TestUtils.getCategoryRequest())
+                .when()
+                .post("http://localhost:" + port + "/store/api/category")
+                .then()
+                .extract();
+        Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), createdCategory.response().statusCode());
+
+    }
+
+    @Test
+    @Transactional
+    void testUnAuthorizedAccess() {
+        var createdCategory = RestAssured.given()
+                .accept(ContentType.JSON).contentType(ContentType.JSON).and()
+                .body(TestUtils.getCategoryRequest())
+                .when()
+                .post("http://localhost:" + port + "/store/api/category")
+                .then()
+                .extract();
+        Assertions.assertEquals(HttpStatus.UNAUTHORIZED.value(), createdCategory.response().statusCode());
+
     }
 
 }
